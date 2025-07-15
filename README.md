@@ -8,4 +8,4 @@ A local chrome extension that accepts a list of restricted URLs that on navigati
 - Open chrome://extensions/
 - Enable developer mode
 - Click "Load unpacked"
-- Select the extension directory
+- Open Blank extension and enter a list of URLs that you want to control (wildcart `*` supported)
