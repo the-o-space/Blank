@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pause</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #FDFBF7;
+      color: #333;
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      color: #222;
+    }
+    
+    .url-input-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    input[type="text"] {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: white;
+      transition: border-color 0.3s ease;
+    }
+    .input-invalid {
+      border-color: #FF6B6B !important;
+      transition: border-color 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    
+    input[type="text"]:focus {
+      outline: none;
+    }
+    
+    button {
+      padding: 0.75rem 1.5rem;
+      background-color: #A8E6CF;
+      color: #333;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #8DD6BD;
+    }
+    
+    .url-list {
+      list-style: none;
+    }
+    
+    .url-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background-color: white;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+    
+    .url-text {
+      flex: 1;
+      color: #555;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+    
+    .remove-btn {
+      display: none;
+      padding: 0.1rem 0.3rem;
+      background: none;
+      border: none;
+      color: #bbb;
+      font-size: 1.25rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.2s, color 0.2s;
+      margin-left: 0.2rem;
+      line-height: 1;
+    }
+    .url-item:hover .remove-btn {
+      display: inline;
+    }
+    .remove-btn:hover {
+      background: #FFB6B6;
+      color: #fff;
+    }
+    
+    .info {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: #F0F0F0;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      color: #666;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #999;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="url-input-container">
+    <input type="text" id="urlInput" placeholder="">
+  </div>
+  
+  <ul id="urlList" class="url-list"></ul>
+  
+  <script src="options.js"></script>
+</body>
+</html> 
