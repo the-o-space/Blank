@@ -46,13 +46,20 @@ function getMindfulStyles(color) {
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 2rem;
     }
     .mindful-words {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       gap: 3rem;
       font-size: 3rem;
       font-weight: 600;
+      max-width: calc(100vw - 8rem);
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      padding: 2rem;
     }
     .mindful-word {
       display: flex;

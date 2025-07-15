@@ -6,13 +6,8 @@ const WORD_CATEGORIES = {
   ],
   FLORA: [
     'tree', 'flower', 'leaf', 'grass', 'moss', 'fern',
-    'bamboo', 'willow', 'cedar', 'oak', 'maple',
-    'pine', 'birch', 'elm', 'sycamore', 'willow',
-    'cedar', 'oak', 'maple', 'pine', 'birch', 'elm',
-    'sycamore', 'willow', 'cedar', 'oak', 'maple',
-    'pine', 'birch', 'elm', 'sycamore', 'willow',
-    'cedar', 'oak', 'maple', 'pine', 'birch', 'elm',
-    'sycamore', 'willow', 'cedar', 'oak', 'maple'
+    'willow', 'cedar', 'oak', 'maple',
+    'pine', 'birch', 'elm', 'sycamore'
   ],
   WATER: [
     'tide', 'current', 'ripple', 'cascade'
