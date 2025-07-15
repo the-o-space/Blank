@@ -1,4 +1,4 @@
-// Get the original URL from the query parameter
+
 const params = new URLSearchParams(window.location.search);
 const originalUrl = params.get('url');
 
@@ -6,34 +6,26 @@ let selectedWords = [];
 let currentColor = '';
 let isCompleted = false; 
 
+const NUM_WORDS = typeof window.NUM_WORDS === 'number' ? window.NUM_WORDS : 3;
 
-const PASTEL_COLORS = [
-  '#FF9B85', '#FF7B92', '#FF6B6B', '#95E6A1', '#A8E88A',
-  '#FFB3D9', '#B19AEA', '#8CE5C7', '#FFB08C', '#C5E898',
-  '#8AD3FF', '#A996FF', '#FFB8F5', '#FF8BDC', '#FF7ACF',
-  '#C99EEC', '#9A7FFD', '#AFA4F0', '#8DDFC2', '#BE9EFF'
-];
-
-// Initialize the page
 initializePage();
 
-function initializePage() {
-  console.log('[Blank Extension] Original URL:', originalUrl);
-  
-  // Select random words and color
-  selectedWords = getRandomWords(3);
+async function initializePage() {
+  selectedWords = getRandomWords(NUM_WORDS);
   currentColor = PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)];
-  
-  console.log('[Blank Extension] Selected words:', selectedWords);
-  
-  // Apply styles
+
   document.getElementById('dynamicStyles').textContent = getMindfulStyles(currentColor);
-  
-  // Render words
   renderMindfulWords();
-  
-  // Setup keyboard listener
   setupKeyboardListener();
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === ',') {
+      e.preventDefault();
+      if (chrome && chrome.runtime && chrome.runtime.openOptionsPage) {
+        chrome.runtime.openOptionsPage();
+      }
+      return;
+    }
+  });
 }
 
 function getMindfulStyles(color) {
@@ -106,13 +98,19 @@ function getRandomWords(count) {
 function setupKeyboardListener() {
   let currentWordIndex = 0;
   let currentLetterIndex = 0;
-  let typedWords = ['', '', ''];
+  let typedWords = Array(selectedWords.length).fill('');
 
   const handleKeyPress = (e) => {
-    // Don't process if already completed
+    if ((e.metaKey || e.ctrlKey) && e.key === ',') {
+      e.preventDefault();
+      if (chrome && chrome.runtime && chrome.runtime.openOptionsPage) {
+        chrome.runtime.openOptionsPage();
+      }
+      return;
+    }
+
     if (isCompleted) return;
     
-    // Only handle typing if our mindful page is present
     const container = document.getElementById('mindfulWords');
     if (!container) {
       return;
@@ -150,16 +148,15 @@ function setupKeyboardListener() {
         typedWords[currentWordIndex] += e.key;
         currentLetterIndex++;
         
-        if (currentLetterIndex === targetWord.length && currentWordIndex < 2) {
+        if (currentLetterIndex === targetWord.length && currentWordIndex < selectedWords.length - 1) {
           currentWordIndex++;
           currentLetterIndex = 0;
-        } else if (currentLetterIndex === targetWord.length && currentWordIndex === 2) {
+        } else if (currentLetterIndex === targetWord.length && currentWordIndex === selectedWords.length - 1) {
           // Check if all words match (case insensitive)
           const allCorrect = typedWords.every((typed, i) => 
             typed.toLowerCase() === selectedWords[i].toLowerCase()
           );
           if (allCorrect) {
-            console.log('[Blank Extension] All words typed correctly!');
             completeTyping();
           }
         }
@@ -171,17 +168,12 @@ function setupKeyboardListener() {
 }
 
 function completeTyping() {
-  // Prevent multiple calls
   if (isCompleted) return;
   isCompleted = true;
   
-  console.log('[Blank Extension] Completing typing, redirecting to:', originalUrl);
-  
-  // Navigate to the original URL
   if (originalUrl) {
-    // Use replace to prevent going back to the interstitial page
     window.location.replace(originalUrl);
   } else {
-    console.error('[Blank Extension] No original URL to redirect to!');
+    console.error('No original URL to redirect to!');
   }
 } 
