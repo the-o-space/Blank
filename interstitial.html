@@ -5,13 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Blank</title>
   <style id="dynamicStyles"></style>
+  <style>
+    html, body {
+      height: 100%;
+      min-height: 100vh;
+      width: 100vw;
+      margin: 0;
+      padding: 0;
+    }
+    .column-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .waveform-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.18;
+      z-index: 0;
+    }
+    .words {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-  <div class="mindful-words" id="mindfulWords"></div>
-  
+  <div class="column-container">
+    <canvas id="calmWaveform" class="waveform-canvas"></canvas>
+    <div class="words" id="words"></div>
+  </div>
   <script src="words.js"></script>
   <script src="color.js"></script>
   <script src="config.js"></script>
+  <script src="waveform.js"></script>
   <script src="interstitial.js"></script>
 </body>
 </html> 

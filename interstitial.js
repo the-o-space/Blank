@@ -15,7 +15,7 @@ async function initializePage() {
   currentColor = PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)];
 
   document.getElementById('dynamicStyles').textContent = getMindfulStyles(currentColor);
-  renderMindfulWords();
+  renderWords();
   setupKeyboardListener();
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === ',') {
@@ -48,7 +48,18 @@ function getMindfulStyles(color) {
       justify-content: center;
       padding: 2rem;
     }
-    .mindful-words {
+    .column-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .words {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -61,35 +72,35 @@ function getMindfulStyles(color) {
       margin: 0 auto;
       padding: 2rem;
     }
-    .mindful-word {
+    .word {
       display: flex;
       gap: 0.1em;
       letter-spacing: 0.05em;
     }
-    .mindful-letter {
+    .letter {
       color: #d0d0d0;
       transition: color 0.3s ease;
     }
-    .mindful-letter.active {
+    .letter.active {
       color: ${color};
     }
   `;
 }
 
-function renderMindfulWords() {
-  const wordsContainer = document.getElementById('mindfulWords');
+function renderWords() {
+  const wordsContainer = document.getElementById('words');
   wordsContainer.innerHTML = '';
   
   selectedWords.forEach((word, index) => {
     const wordElement = document.createElement('div');
-    wordElement.className = 'mindful-word';
+    wordElement.className = 'word';
     wordElement.dataset.word = word;
     wordElement.dataset.index = index;
     
     [...word].forEach(letter => {
       const span = document.createElement('span');
       span.textContent = letter;
-      span.className = 'mindful-letter';
+      span.className = 'letter';
       wordElement.appendChild(span);
     });
     
@@ -118,7 +129,7 @@ function setupKeyboardListener() {
 
     if (isCompleted) return;
     
-    const container = document.getElementById('mindfulWords');
+    const container = document.getElementById('words');
     if (!container) {
       return;
     }
@@ -131,14 +142,14 @@ function setupKeyboardListener() {
     e.preventDefault();
     e.stopPropagation();
     
-    const words = document.querySelectorAll('.mindful-word');
+    const words = document.querySelectorAll('.word');
     if (!words || words.length === 0) {
       return;
     }
     
     const currentWord = words[currentWordIndex];
     const targetWord = selectedWords[currentWordIndex];
-    const letters = currentWord.querySelectorAll('.mindful-letter');
+    const letters = currentWord.querySelectorAll('.letter');
     
     if (e.key === 'Backspace') {
       if (currentLetterIndex > 0) {
@@ -159,7 +170,6 @@ function setupKeyboardListener() {
           currentWordIndex++;
           currentLetterIndex = 0;
         } else if (currentLetterIndex === targetWord.length && currentWordIndex === selectedWords.length - 1) {
-          // Check if all words match (case insensitive)
           const allCorrect = typedWords.every((typed, i) => 
             typed.toLowerCase() === selectedWords[i].toLowerCase()
           );
