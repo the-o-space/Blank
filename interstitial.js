@@ -91,7 +91,7 @@ function renderMindfulWords() {
 }
 
 function getRandomWords(count) {
-  const shuffled = [...CALMING_WORDS].sort(() => 0.5 - Math.random());
+  const shuffled = [...WORDS].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
 
